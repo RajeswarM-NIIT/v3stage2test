@@ -42,4 +42,14 @@ public class UserController {
 		return new ResponseEntity<List<UserDetails>> (data,HttpStatus.OK);
 		
 	}
+	
+	@RequestMapping(value="/loginCheck", method=RequestMethod.POST)
+	public ResponseEntity<?> loginCheck(@RequestBody UserDetails userDetails){
+		UserDetails data = userDetailsDao.loginCheck(userDetails);
+		if(data!=null)
+			return new ResponseEntity<UserDetails> (data,HttpStatus.OK);
+		else
+			return new ResponseEntity<Error> (new Error(2,"Authentication failed"),HttpStatus.UNAUTHORIZED);		
+	}
+	
 }

@@ -35,7 +35,13 @@ public class UserDetailsDAOImpl implements UserDetailsDAOInt {
 	}
 
 	public UserDetails loginCheck(UserDetails userDetails) {
-		return null;
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("from UserDetails where userid=? and password=? and enabled=true");
+		query.setParameter(0, userDetails.getUserid());
+		query.setParameter(1, userDetails.getPassword());
+		UserDetails result = (UserDetails)query.uniqueResult();
+		session.close();
+		return result;
 	}
 	
 	
